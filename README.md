@@ -3,7 +3,7 @@
 CRUD using Spring Boot, Mysql, JPA and Hibernate using docker-compose.
 
 ## Requirement
-1) Clone the Repo & run the following commands.
+Install the following requirement
 
 ```bash
 1. Java - 11
@@ -76,6 +76,8 @@ public class MovieRepositoryTests {
 ![App Screenshot](https://firebasestorage.googleapis.com/v0/b/many-93eb4.appspot.com/o/Screen%20Shot%202022-01-11%20at%2011.24.05%20AM.png?alt=media&token=2f105375-51b6-4522-9b1b-5fd407445f74)
 
 # Deployment with Docker
+
+#### Required Install Docker Engine
 
 ### Dockerfile
 ```c
