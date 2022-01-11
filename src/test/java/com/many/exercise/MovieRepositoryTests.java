@@ -68,10 +68,10 @@ public class MovieRepositoryTests {
         Movie movie = movieRepository.findById(1L).get();
         movieRepository.delete(movie);
         Movie checkMovie = null;
-        Optional<Movie> optionalEmployee = movieRepository.findByName("ram@gmail.com");
+        Optional<Movie> optionalMovie = movieRepository.findByName("ram@gmail.com");
 
-        if(optionalEmployee.isPresent()){
-            checkMovie = optionalEmployee.get();
+        if(optionalMovie.isPresent()){
+            checkMovie = optionalMovie.get();
         }
         Assertions.assertThat(checkMovie).isNull();
     }

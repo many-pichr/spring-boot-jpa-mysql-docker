@@ -2,6 +2,7 @@ package com.many.exercise.controller;
 
 import com.many.exercise.entity.Category;
 import com.many.exercise.repository.CategoryRepository;
+import com.many.exercise.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +17,13 @@ import java.util.Map;
 public class CategoryController {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    CategoryService categoryService;
 
     @GetMapping()
     public ResponseEntity<Map<String, Object>> getCategories() {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            List<Category> categories = categoryRepository.findAll();
+            List<Category> categories = categoryService.findAll();
             map.put("data", categories);
             map.put("status", true);
         } catch (Exception e) {
@@ -36,7 +37,7 @@ public class CategoryController {
     public ResponseEntity<Map<String, Object>> saveCategory(@RequestBody Category category) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            Category saved = categoryRepository.save(category);
+            Category saved = categoryService.save(category);
             map.put("data", saved);
             map.put("status", true);
         } catch (Exception e) {
@@ -50,10 +51,10 @@ public class CategoryController {
     public ResponseEntity<Map<String, Object>> updateCategory(@PathVariable("id") long id, @RequestBody Category category) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            Category findById = categoryRepository.findById(id).orElse(null);
+            Category findById = categoryService.findById(id);
             if(findById.getId()>0){
                 findById.setName(category.getName());
-                Category updated = categoryRepository.save(findById);
+                Category updated = categoryService.save(findById);
                 map.put("data", updated);
                 map.put("status", true);
             }else{
@@ -71,10 +72,10 @@ public class CategoryController {
     public ResponseEntity<Map<String, Object>> deleteCategory(@PathVariable("id") long id) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            Category findById = categoryRepository.findById(id).orElse(null);
+            Category findById = categoryService.findById(id);
             if(findById.getId()>0){
-                categoryRepository.deleteById(findById.getId());
-                map.put("status", true);
+                Boolean deleted = categoryService.deleteById(findById.getId());
+                map.put("status", deleted);
             }else{
                 map.put("error", "Not found category");
                 map.put("status", false);

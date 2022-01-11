@@ -1,6 +1,6 @@
 package com.many.exercise.controller;
 import com.many.exercise.entity.Movie;
-import com.many.exercise.repository.MovieRepository;
+import com.many.exercise.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +14,13 @@ import java.util.Map;
 public class MovieController {
 
     @Autowired
-    MovieRepository movieRepository;
+    MovieService movieService;
 
     @GetMapping()
     public ResponseEntity<Map<String, Object>> getMovies() {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            List<Movie> categories = movieRepository.findAll();
+            List<Movie> categories = movieService.findAll();
             map.put("data", categories);
             map.put("status", true);
         } catch (Exception e) {
@@ -34,7 +34,7 @@ public class MovieController {
     public ResponseEntity<Map<String, Object>> getMovieById(@PathVariable("id") long id) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            Movie movie = movieRepository.findById(id).orElse(null);
+            Movie movie = movieService.findById(id);
             if(movie.getId()>0){
                 map.put("data", movie);
                 map.put("status", true);
@@ -54,7 +54,7 @@ public class MovieController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             if (movie.getRating()>=0.5 && movie.getRating()<=5) {
-                Movie saved = movieRepository.save(movie);
+                Movie saved = movieService.save(movie);
                 map.put("data", saved);
                 map.put("status", true);
             }else{
@@ -73,13 +73,13 @@ public class MovieController {
     public ResponseEntity<Map<String, Object>> updateMovie(@PathVariable("id") long id, @RequestBody Movie movie) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            Movie findById = movieRepository.findById(id).orElse(null);
+            Movie findById = movieService.findById(id);
             if(findById.getId()>0){
                 findById.setName(movie.getName());
                 findById.setCategory(movie.getCategory());
                 findById.setRating(movie.getRating());
                 if (movie.getRating()>=0.5 && movie.getRating()<=5) {
-                    Movie updated = movieRepository.save(findById);
+                    Movie updated = movieService.save(findById);
                     map.put("data", updated);
                     map.put("status", true);
                 }else{
@@ -101,10 +101,10 @@ public class MovieController {
     public ResponseEntity<Map<String, Object>> deleteMovie(@PathVariable("id") long id) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            Movie findById = movieRepository.findById(id).orElse(null);
+            Movie findById = movieService.findById(id);
             if(findById.getId()>0){
-                movieRepository.deleteById(findById.getId());
-                map.put("status", true);
+                Boolean deleted = movieService.deleteById(findById.getId());
+                map.put("status", deleted);
             }else{
                 map.put("error", "Not found movie");
                 map.put("status", false);
