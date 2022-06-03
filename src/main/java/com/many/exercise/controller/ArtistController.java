@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/category")
-public class CategoryController {
+@RequestMapping("/api/artist")
+public class ArtistController {
 
     @Autowired
     ArtistRepository artistRepository;
@@ -27,8 +27,8 @@ public class CategoryController {
     public ResponseEntity<Map<String, Object>> getCategories() {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            List<Category> categories = categoryRepository.findAll();
-            map.put("data", categories);
+            List<Artist> artists = artistRepository.findAll();
+            map.put("data", artists);
             map.put("status", true);
         } catch (Exception e) {
             e.printStackTrace();

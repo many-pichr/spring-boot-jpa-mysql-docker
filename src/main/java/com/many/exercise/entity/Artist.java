@@ -5,16 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "artist")
+public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @Column(name = "old_id")
+    private Long oldId;
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Track> track;
 
@@ -31,6 +32,13 @@ public class Category {
     @Column(name="song")
     private Long song;
 
+    public Long getOldId() {
+        return oldId;
+    }
+
+    public void setOldId(Long oldId) {
+        this.oldId = oldId;
+    }
     public Long getId() {
         return id;
     }

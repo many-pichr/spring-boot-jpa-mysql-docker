@@ -1,5 +1,5 @@
 package com.many.exercise.controller;
-import com.many.exercise.entity.Movie;
+import com.many.exercise.entity.Track;
 import com.many.exercise.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class MovieController {
     public ResponseEntity<Map<String, Object>> getMovies() {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            List<Movie> categories = movieService.findAll();
+            List<Track> categories = movieService.findAll();
             map.put("data", categories);
             map.put("status", true);
         } catch (Exception e) {
@@ -34,9 +34,9 @@ public class MovieController {
     public ResponseEntity<Map<String, Object>> getMovieById(@PathVariable("id") long id) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            Movie movie = movieService.findById(id);
-            if(movie.getId()>0){
-                map.put("data", movie);
+            Track track = movieService.findById(id);
+            if(track.getId()>0){
+                map.put("data", track);
                 map.put("status", true);
             }else{
                 map.put("error", "Not found movie");
@@ -50,17 +50,10 @@ public class MovieController {
         return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
     }
     @PostMapping()
-    public ResponseEntity<Map<String, Object>> saveMovie(@RequestBody Movie movie) {
+    public ResponseEntity<Map<String, Object>> saveMovie(@RequestBody Track track) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            if (movie.getRating()>=0.5 && movie.getRating()<=5) {
-                Movie saved = movieService.save(movie);
-                map.put("data", saved);
-                map.put("status", true);
-            }else{
-                map.put("error", "Please enter rating between 0.5 to 5");
-                map.put("status", false);
-            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,22 +63,13 @@ public class MovieController {
         return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> updateMovie(@PathVariable("id") long id, @RequestBody Movie movie) {
+    public ResponseEntity<Map<String, Object>> updateMovie(@PathVariable("id") long id, @RequestBody Track track) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            Movie findById = movieService.findById(id);
+            Track findById = movieService.findById(id);
             if(findById.getId()>0){
-                findById.setName(movie.getName());
-                findById.setCategory(movie.getCategory());
-                findById.setRating(movie.getRating());
-                if (movie.getRating()>=0.5 && movie.getRating()<=5) {
-                    Movie updated = movieService.save(findById);
-                    map.put("data", updated);
-                    map.put("status", true);
-                }else{
-                    map.put("error", "Please enter rating between 0.5 to 5");
-                    map.put("status", false);
-                }
+                findById.setName(track.getName());
+                findById.setCategory(track.getCategory());
             }else{
                 map.put("error", "Not found movie");
                 map.put("status", false);
@@ -101,7 +85,7 @@ public class MovieController {
     public ResponseEntity<Map<String, Object>> deleteMovie(@PathVariable("id") long id) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            Movie findById = movieService.findById(id);
+            Track findById = movieService.findById(id);
             if(findById.getId()>0){
                 Boolean deleted = movieService.deleteById(findById.getId());
                 map.put("status", deleted);

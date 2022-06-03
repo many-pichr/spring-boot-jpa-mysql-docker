@@ -61,14 +61,14 @@ public class MovieRepositoryTests {
     @Order(1)
     @Rollback(value = false)
     public void saveMovieTest(){
-        Movie movie = new Movie();
+        Movie track = new Movie();
         Category category = new Category();
-        movie.setName("Spider Man");
-        movie.setRating(1.0);
+        track.setName("Spider Man");
+        track.setRating(1.0);
         category.setId(1L);
-        movie.setCategory(category);
-        movieRepository.save(movie);
-        Assertions.assertThat(movie.getId()).isGreaterThan(0);
+        track.setCategory(category);
+        movieRepository.save(track);
+        Assertions.assertThat(track.getId()).isGreaterThan(0);
     }
 ```
 ### Result

@@ -1,11 +1,11 @@
 package com.many.exercise.service;
-import com.many.exercise.entity.Movie;
+import com.many.exercise.entity.Track;
 
 import java.util.List;
 
 public interface MovieService {
-    List<Movie> findAll();
-    Movie findById(Long id);
-    Movie save(Movie movie);
+    List<Track> findAll();
+    Track findById(Long id);
+    Track save(Track track);
     Boolean deleteById(Long id);
 }

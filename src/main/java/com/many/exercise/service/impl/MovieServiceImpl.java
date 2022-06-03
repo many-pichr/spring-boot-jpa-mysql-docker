@@ -1,6 +1,6 @@
 package com.many.exercise.service.impl;
 
-import com.many.exercise.entity.Movie;
+import com.many.exercise.entity.Track;
 import com.many.exercise.repository.MovieRepository;
 import com.many.exercise.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +15,18 @@ public class MovieServiceImpl implements MovieService {
     MovieRepository movieRepository;
 
     @Override
-    public List<Movie> findAll() {
+    public List<Track> findAll() {
         return movieRepository.findAll();
     }
 
     @Override
-    public Movie findById(Long id) {
+    public Track findById(Long id) {
         return movieRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Movie save(Movie movie) {
-        return movieRepository.save(movie);
+    public Track save(Track track) {
+        return movieRepository.save(track);
     }
 
     @Override
