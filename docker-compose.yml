@@ -3,6 +3,7 @@ version: '3.3'
 services:
   #service 1: definition of mysql database
   db:
+    platform: linux/x86_64
     image: mysql:latest
     container_name: mysql-db
     environment:
@@ -11,20 +12,20 @@ services:
       - "3306:3306"
     restart: always
 
-#  #service 2: definition of your spring-boot app
-#  customerservice:                        #it is just a name, which will be used only in this file.
-#    image: spring-boot-image               #name of the image after dockerfile executes
-#    container_name: spring-boot-app  #name of the container created from docker image
-#    build:
-#      context: .                          #docker file path (. means root directory)
-#      dockerfile: Dockerfile              #docker file name
-#    ports:
-#      - "8088:8088"                       #docker containter port with your os port
-#    restart: always
-#
-#    depends_on:                           #define dependencies of this app
-#      - db                                #dependency name (which is defined with this name 'db' in this file earlier)
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/music?createDatabaseIfNotExist=true
-#      SPRING_DATASOURCE_USERNAME: root
-#      SPRING_DATASOURCE_PASSWORD: password
+  #service 2: definition of your spring-boot app
+  customerservice:                        #it is just a name, which will be used only in this file.
+    image: spring-boot-image               #name of the image after dockerfile executes
+    container_name: spring-boot-app  #name of the container created from docker image
+    build:
+      context: .                          #docker file path (. means root directory)
+      dockerfile: Dockerfile              #docker file name
+    ports:
+      - "8088:8088"                       #docker containter port with your os port
+    restart: always
+
+    depends_on:                           #define dependencies of this app
+      - db                                #dependency name (which is defined with this name 'db' in this file earlier)
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/music?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
