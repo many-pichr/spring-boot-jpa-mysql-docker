@@ -21,6 +21,7 @@ services:
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: password
+      UPLOAD_LIMIT: 300M
   #service 2: definition of your spring-boot app
   customerservice:                        #it is just a name, which will be used only in this file.
     image: spring-boot-image               #name of the image after dockerfile executes
