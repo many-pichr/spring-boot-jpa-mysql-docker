@@ -86,4 +86,18 @@ public class MusicController {
         }
         return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
     }
+    @GetMapping("/album/{id}")
+    public ResponseEntity<Map<String, Object>> getByAlbum(@RequestHeader(value="size") Long size, @PathVariable("id") long id) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            List<Track> tracks = musicRepository.getByAlbum(size, id);
+            map.put("data", tracks);
+            map.put("status", true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("error", "Not found data");
+            map.put("status", false);
+        }
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+    }
 }

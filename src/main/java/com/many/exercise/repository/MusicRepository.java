@@ -40,6 +40,12 @@ public interface MusicRepository extends JpaRepository<Track, Long> {
     )
     List<Track> getByCategory(@Param("size") Long size, @Param("id") Long id);
 
+    @Query(
+            value = "SELECT * FROM track where album_id=:id order by id desc limit :size",
+            nativeQuery = true
+    )
+    List<Track> getByAlbum(@Param("size") Long size, @Param("id") Long id);
+
 
     Optional<Track> findByOldId(Long id);
 }
